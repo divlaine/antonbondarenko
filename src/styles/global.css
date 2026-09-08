@@ -3,3 +3,12 @@
 @media(prefers-color-scheme:dark){:root{--bg:#0d1110;--surface:#151b19;--ink:#edf3ef;--muted:#9daaa6;--line:#303a37;--accent:#9ed4c1;--pop:#b9ff66}.wordmark span{background:var(--pop);color:#17201e}.button{background:var(--pop);color:#17201e}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{.site-header,footer,.resume-actions,.skip{display:none}.page-intro{padding:1rem 0}.page-intro .lede,.page-intro .eyebrow{display:none}.resume{margin:0;padding:0;width:100%;background:white;color:black}.resume>header h2{font-size:2rem}.resume section{padding-top:1rem}.resume-job{break-inside:avoid;margin-top:1rem}body{background:white;color:black;font-size:10pt}.shell{width:100%}}
+/* Two-level hierarchy for technical focus and structured case studies. */
+.section .expertise article{padding-block:1.8rem}
+.section .expertise h3{margin-bottom:.65rem;font-size:1.65rem}
+.expertise .expertise-key{color:var(--ink);font-weight:650}
+.expertise .expertise-tools{margin-top:.55rem;color:var(--muted);font-size:.86rem;line-height:1.55}
+.case-section{padding-top:2.5rem}
+.case-section+.case-section{border-top:1px solid var(--line);margin-top:2.5rem}
+.case-body .case-section h2{margin:0 0 .75rem}
+.case-section p{margin:0}

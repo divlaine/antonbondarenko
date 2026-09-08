@@ -4,11 +4,27 @@ import { profile } from '@/config/profile';
 import { site } from '@/config/site';
 import { copy, type Lang } from '@/i18n/content';
 import { localize, switchLanguage, withBase } from '@/i18n/routing';
-interface Props { lang:Lang; title?:string; description?:string; path:string; schema?:Record<string,unknown> }
-const { lang, title=site.title[lang], description=site.description[lang], path, schema } = Astro.props;
+interface Props { lang:Lang; title?:string; description?:string; path:string; schema?:Record<string,unknown>; noindex?:boolean }
+const { lang, title=site.title[lang], description, path, schema, noindex=false } = Astro.props;
+const sectionDescriptions = {
+  en: {
+    '/experience':'Anton Bondarenko’s experience in iOS engineering, performance optimization, architecture, and production stability.',
+    '/projects':'Engineering case studies by Anton Bondarenko covering iOS performance, cold start, production stability, and mobile architecture.',
+    '/articles':'Draft outlines for technical writing about iOS performance, Instruments, production stability, and mobile architecture.',
+    '/contact':'Contact Anton Bondarenko about Senior iOS roles, technical consulting, performance, and mobile architecture.',
+  },
+  ru: {
+    '/experience':'Опыт Антона Бондаренко в iOS-разработке, оптимизации производительности, архитектуре и стабильности production-приложений.',
+    '/projects':'Инженерные кейсы Антона Бондаренко: производительность iOS, cold start, production stability и мобильная архитектура.',
+    '/articles':'Черновые планы технических материалов об iOS performance, Instruments, стабильности и mobile architecture.',
+    '/contact':'Контакты Антона Бондаренко для Senior iOS-позиций, технического консалтинга и обсуждения мобильной разработки.',
+  },
+} as const;
+const metaDescription = description ?? sectionDescriptions[lang][path as keyof typeof sectionDescriptions[typeof lang]] ?? site.description[lang];
+const shouldNoindex = noindex || path.startsWith('/articles/');
 const t=copy[lang]; const origin=Astro.site?.origin || site.defaultUrl;
 const canonical=new URL(localize(path,lang),origin); const en=new URL(localize(path,'en'),origin); const ru=new URL(localize(path,'ru'),origin);
-const person={ '@context':'https://schema.org','@type':'Person',name:profile.name,alternateName:profile.nameRu,jobTitle:profile.jobTitle,url:origin,sameAs:[profile.linkedin,profile.github],knowsAbout:['iOS development','Swift','Performance optimization','Software architecture','Concurrency'] };
+const person={ '@context':'https://schema.org','@type':'Person',name:profile.name,alternateName:profile.nameRu,jobTitle:profile.jobTitle,url:canonical.href,sameAs:[profile.github,profile.linkedin],knowsAbout:['Swift','iOS Development','iOS Performance Optimization','Swift Concurrency','Mobile Architecture','Flutter'] };
 const jsonLd=schema ?? (path==='/' ? person : undefined);
 const nav=[['experience',t.nav.experience],['projects',t.nav.projects],['articles',t.nav.articles],['resume',t.nav.resume],['contact',t.nav.contact]];
 ---
@@ -16,11 +32,11 @@ const nav=[['experience',t.nav.experience],['projects',t.nav.projects],['article
 <html lang={lang}>
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width" />
-  <title>{title}</title><meta name="description" content={description} />
+  <title>{title}</title><meta name="description" content={metaDescription} />{shouldNoindex&&<meta name="robots" content="noindex, follow" />}
   <link rel="canonical" href={canonical} /><link rel="alternate" hreflang="en" href={en} /><link rel="alternate" hreflang="ru" href={ru} /><link rel="alternate" hreflang="x-default" href={en} />
-  <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:locale" content={lang==='ru'?'ru_RU':'en_US'} />
-  <meta property="og:image" content={new URL(withBase('/og.png'),origin)} /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={new URL(withBase('/og.png'),origin)} />
+  <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={metaDescription} /><meta property="og:url" content={canonical} /><meta property="og:locale" content={lang==='ru'?'ru_RU':'en_US'} />
+  <meta property="og:image" content={new URL(withBase('/og.png'),origin)} /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Anton Bondarenko — Senior iOS Developer" />
+  <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={metaDescription} /><meta name="twitter:image" content={new URL(withBase('/og.png'),origin)} />
   <meta name="theme-color" content="#0c0f0f" media="(prefers-color-scheme: dark)" /><link rel="icon" href={withBase('/favicon.svg')} />
   {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
