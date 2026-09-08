@@ -1,0 +1,5 @@
+---
+import type { Lang } from '@/i18n/content'; import { copy } from '@/i18n/content'; import { projects } from '@/data/content'; import { localize } from '@/i18n/routing';
+const {lang,featured=false}=Astro.props as {lang:Lang;featured?:boolean}; const list=featured?projects[lang].filter(x=>x.featured):projects[lang];
+---
+<div class="project-grid">{list.map(p=><article class="project-card"><p class="meta">{p.company} {p.period&&<>· {p.period}</>}</p><h3><a href={localize(`/projects/${p.slug}`,lang)}>{p.title}</a></h3><p>{p.description}</p><p class="impact-line">{p.impact}</p><ul class="tags" aria-label="Technologies">{p.technologies.map(x=><li>{x}</li>)}</ul><a class="text-link" href={localize(`/projects/${p.slug}`,lang)}>{copy[lang].readCase} <span aria-hidden="true">→</span></a></article>)}</div>

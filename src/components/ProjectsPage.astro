@@ -1,0 +1,5 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';import PageIntro from './PageIntro.astro';import ProjectGrid from './ProjectGrid.astro';import {copy,type Lang} from '@/i18n/content';
+const {lang}=Astro.props as {lang:Lang};const t=copy[lang];
+---
+<BaseLayout lang={lang} path="/projects" title={`${t.projectsTitle} — ${lang==='ru'?'Антон Бондаренко':'Anton Bondarenko'}`}><PageIntro eyebrow="Cases / Production" title={t.projectsTitle} description={lang==='ru'?'Кейсы сгруппированы по инженерной задаче, а не только по работодателю. Публичные детали ограничены подтвержденными фактами из резюме.':'Cases are organized around engineering work, not only employers. Public detail is limited to verified résumé facts.'}/><section class="shell section no-top"><ProjectGrid lang={lang}/></section><aside class="nda shell"><span>NDA</span><p>{t.nda}</p></aside></BaseLayout>

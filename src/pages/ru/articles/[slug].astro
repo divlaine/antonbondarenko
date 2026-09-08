@@ -1,0 +1,13 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import {articleMeta} from '@/data/content';
+import {localize} from '@/i18n/routing';
+export function getStaticPaths(){
+  return articleMeta.ru.map((item)=>{
+    const [slug,,title,description]=item;
+    return {params:{slug},props:{slug,title,description}};
+  });
+}
+const {slug,title,description}=Astro.props;
+---
+<BaseLayout lang="ru" path={`/articles/${slug}`} title={`${title} — Черновик`} description={description}><article class="case shell"><a class="back" href={localize('/articles','ru')}>← Все статьи</a><p class="eyebrow">Черновик / Не опубликовано</p><h1>{title}</h1><p class="lede">{description}</p><div class="draft-notice"><b>Только план</b><p>Материал намеренно не представлен как опубликованная статья. Детали реализации будут добавлены после проверки точности и соответствия NDA.</p></div><div class="case-body"><h2>Предлагаемая структура</h2><ol><li>Production-контекст и наблюдаемая проблема</li><li>Стратегия профилирования и данные</li><li>Инженерное решение и компромиссы</li><li>Этапы реализации — TODO</li><li>Метод измерения и подтвержденный результат</li><li>Выводы и ограничения</li></ol></div></article></BaseLayout>

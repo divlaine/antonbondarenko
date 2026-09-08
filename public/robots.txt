@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://divlaine.github.io/antonbondarenko/sitemap-index.xml

@@ -1,0 +1,6 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": { "baseUrl": ".", "paths": { "@/*": ["src/*"] } },
+  "include": [".astro/types.d.ts", "src/**/*.ts", "src/**/*.astro"],
+  "exclude": ["app", "build", "db", "drizzle", "examples", "worker", "tests", "next.config.ts", "vite.config.ts", "drizzle.config.ts"]
+}

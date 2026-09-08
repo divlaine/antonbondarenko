@@ -1,0 +1,13 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import {articleMeta} from '@/data/content';
+import {localize} from '@/i18n/routing';
+export function getStaticPaths(){
+  return articleMeta.en.map((item)=>{
+    const [slug,,title,description]=item;
+    return {params:{slug},props:{slug,title,description}};
+  });
+}
+const {slug,title,description}=Astro.props;
+---
+<BaseLayout lang="en" path={`/articles/${slug}`} title={`${title} — Draft`} description={description}><article class="case shell"><a class="back" href={localize('/articles','en')}>← All articles</a><p class="eyebrow">Draft / Not published</p><h1>{title}</h1><p class="lede">{description}</p><div class="draft-notice"><b>Outline only</b><p>This is intentionally not presented as a published article. Detailed implementation notes will be added after they can be reviewed for accuracy and NDA compliance.</p></div><div class="case-body"><h2>Proposed outline</h2><ol><li>Production context and observable symptom</li><li>Profiling strategy and evidence</li><li>Engineering decision and trade-offs</li><li>Implementation stages — TODO</li><li>Measurement method and verified result</li><li>Lessons and limits</li></ol></div></article></BaseLayout>

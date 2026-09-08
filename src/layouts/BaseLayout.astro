@@ -1,0 +1,36 @@
+---
+import '@/styles/global.css';
+import { profile } from '@/config/profile';
+import { site } from '@/config/site';
+import { copy, type Lang } from '@/i18n/content';
+import { localize, switchLanguage, withBase } from '@/i18n/routing';
+interface Props { lang:Lang; title?:string; description?:string; path:string; schema?:Record<string,unknown> }
+const { lang, title=site.title[lang], description=site.description[lang], path, schema } = Astro.props;
+const t=copy[lang]; const origin=Astro.site?.origin || site.defaultUrl;
+const canonical=new URL(localize(path,lang),origin); const en=new URL(localize(path,'en'),origin); const ru=new URL(localize(path,'ru'),origin);
+const person={ '@context':'https://schema.org','@type':'Person',name:profile.name,alternateName:profile.nameRu,jobTitle:profile.jobTitle,url:origin,sameAs:[profile.linkedin,profile.github],knowsAbout:['iOS development','Swift','Performance optimization','Software architecture','Concurrency'] };
+const jsonLd=schema ?? (path==='/' ? person : undefined);
+const nav=[['experience',t.nav.experience],['projects',t.nav.projects],['articles',t.nav.articles],['resume',t.nav.resume],['contact',t.nav.contact]];
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width" />
+  <title>{title}</title><meta name="description" content={description} />
+  <link rel="canonical" href={canonical} /><link rel="alternate" hreflang="en" href={en} /><link rel="alternate" hreflang="ru" href={ru} /><link rel="alternate" hreflang="x-default" href={en} />
+  <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:locale" content={lang==='ru'?'ru_RU':'en_US'} />
+  <meta property="og:image" content={new URL(withBase('/og.png'),origin)} /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={new URL(withBase('/og.png'),origin)} />
+  <meta name="theme-color" content="#0c0f0f" media="(prefers-color-scheme: dark)" /><link rel="icon" href={withBase('/favicon.svg')} />
+  {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body>
+  <a class="skip" href="#main">{lang==='ru'?'К содержанию':'Skip to content'}</a>
+  <header class="site-header"><div class="shell nav-wrap">
+    <a class="wordmark" href={localize('/',lang)} aria-label={t.nav.home}><span>AB</span><b>{lang==='ru'?profile.nameRu:profile.name}</b></a>
+    <nav aria-label={lang==='ru'?'Основная навигация':'Primary navigation'}>{nav.map(([p,label])=><a href={localize(`/${p}`,lang)}>{label}</a>)}</nav>
+    <div class="langs" aria-label={lang==='ru'?'Язык':'Language'}><a class:list={{active:lang==='en'}} href={lang==='en'?Astro.url.pathname:switchLanguage(Astro.url.pathname)} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a><i>/</i><a class:list={{active:lang==='ru'}} href={lang==='ru'?Astro.url.pathname:switchLanguage(Astro.url.pathname)} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a></div>
+  </div></header>
+  <main id="main"><slot /></main>
+  <footer><div class="shell footer-grid"><p><b>{lang==='ru'?profile.nameRu:profile.name}</b><br/><span>{t.footer}</span></p><div><a href={`mailto:${profile.email}`}>Email</a><a href={profile.telegram} target="_blank" rel="noopener noreferrer">Telegram</a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></div><p class="footer-note">© {new Date().getFullYear()} · {lang==='ru'?'Статический сайт без трекеров.':'Static by design. No trackers.'}</p></div></footer>
+</body></html>

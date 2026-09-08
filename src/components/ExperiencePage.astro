@@ -1,0 +1,5 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';import PageIntro from './PageIntro.astro';import {copy,type Lang} from '@/i18n/content';import {experience} from '@/data/content';
+const {lang}=Astro.props as {lang:Lang}; const t=copy[lang];
+---
+<BaseLayout lang={lang} path="/experience" title={`${t.experienceTitle} — ${lang==='ru'?'Антон Бондаренко':'Anton Bondarenko'}`}><PageIntro eyebrow="Career / 2014—now" title={t.experienceTitle} description={lang==='ru'?'Разработка мобильных продуктов: от архитектуры и реализации до производительности, стабильности и релиза.':'Mobile product engineering from architecture and implementation to performance, stability, and release.'}/><section class="shell timeline">{experience[lang].map((job,i)=><article><div class="timeline-mark">0{i+1}</div><div><p class="meta">{job.period|| (lang==='ru'?'Дополнительный коммерческий опыт':'Additional commercial experience')}</p><h2>{job.company}</h2><p class="role">{job.role}</p><p>{job.context}</p><ul>{job.points.map(x=><li>{x}</li>)}</ul></div></article>)}</section><aside class="nda shell"><span>NDA</span><p>{t.nda}</p></aside></BaseLayout>

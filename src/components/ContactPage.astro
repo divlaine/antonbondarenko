@@ -1,0 +1,5 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';import {copy,type Lang} from '@/i18n/content';import {profile} from '@/config/profile';
+const {lang}=Astro.props as {lang:Lang};const t=copy[lang];
+---
+<BaseLayout lang={lang} path="/contact" title={`${t.nav.contact} — ${lang==='ru'?profile.nameRu:profile.name}`}><section class="contact-hero shell"><p class="eyebrow">Contact / {lang==='ru'?'Удаленная работа':'Remote work'}</p><h1>{t.contactTitle}</h1><p class="lede">{t.contactBody}</p><div class="contact-list"><a href={`mailto:${profile.email}`}><span>Email</span><b>{profile.email}</b><i>↗</i></a><a href={profile.telegram} target="_blank" rel="noopener noreferrer"><span>Telegram</span><b>@divlaine</b><i>↗</i></a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><b>/in/aabondarenko</b><i>↗</i></a><a href={profile.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><b>@divlaine</b><i>↗</i></a></div></section></BaseLayout>

@@ -1,0 +1,5 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';import PageIntro from './PageIntro.astro';import {copy,type Lang} from '@/i18n/content';import {articleMeta} from '@/data/content';import {localize} from '@/i18n/routing';
+const {lang}=Astro.props as {lang:Lang};const t=copy[lang];
+---
+<BaseLayout lang={lang} path="/articles" title={`${t.articlesTitle} — ${lang==='ru'?'Антон Бондаренко':'Anton Bondarenko'}`}><PageIntro eyebrow="Writing / Drafts" title={t.articlesTitle} description={lang==='ru'?'Будущие технические разборы. Пока опубликованы только честные черновые планы — без выдуманных деталей реализации.':'Future technical deep dives. Only honest draft outlines are available until implementation details are supplied.'}/><section class="shell article-list">{articleMeta[lang].map((item,i)=>{const [slug,,title,description]=item;return <article><span class="index">0{i+1}</span><div><p class="meta">{t.draft}</p><h2><a href={localize(`/articles/${slug}`,lang)}>{title}</a></h2><p>{description}</p></div><a class="arrow" aria-label={title} href={localize(`/articles/${slug}`,lang)}>↗</a></article>})}</section></BaseLayout>
