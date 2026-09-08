@@ -13,8 +13,8 @@
 .case-body .case-section h2{margin:0 0 .75rem}
 .case-section p{margin:0}
 .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
-.metrics article{min-width:0}
-.metrics strong{max-width:100%}
-.metrics .metric-value--compact{font-size:clamp(2rem,3vw,2.8rem)}
-@media(max-width:850px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.metrics{grid-template-columns:minmax(0,1fr)}}
+.metrics article{min-width:0;container-type:inline-size}
+.metrics strong{max-width:100%;font-size:clamp(2.2rem,16cqi,3.8rem)}
+.metrics .metric-value--compact{font-size:clamp(1.9rem,11cqi,2.75rem)}
+@media(max-width:1100px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.metrics{grid-template-columns:minmax(0,1fr)}}
