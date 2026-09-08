@@ -12,3 +12,9 @@
 .case-section+.case-section{border-top:1px solid var(--line);margin-top:2.5rem}
 .case-body .case-section h2{margin:0 0 .75rem}
 .case-section p{margin:0}
+.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+.metrics article{min-width:0}
+.metrics strong{max-width:100%}
+.metrics .metric-value--compact{font-size:clamp(2rem,3vw,2.8rem)}
+@media(max-width:850px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.metrics{grid-template-columns:minmax(0,1fr)}}
