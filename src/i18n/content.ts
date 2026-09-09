@@ -7,7 +7,7 @@ export const copy = {
     impact:'Selected impact', impactIntro:'Measured outcomes from production engineering work.',
     bring:'What I bring', focus:'Technical focus', featured:'Featured engineering cases', viewAll:'View all projects', readCase:'Read case study',
     nda:'Some commercial products cannot be publicly demonstrated due to NDA restrictions. Permitted architecture, performance and implementation details can be discussed during interviews.',
-    footer:'Senior iOS Developer · Samara, Russia', draft:'Draft outline', contactTitle:'Let’s discuss engineering work', contactBody:'For Senior iOS roles, technical consulting, or a focused conversation about mobile performance and architecture, contact me directly.',
+    footer:'Senior iOS Developer', draft:'Draft outline', contactTitle:'Let’s discuss engineering work', contactBody:'For Senior iOS roles, technical consulting, or a focused conversation about mobile performance and architecture, contact me directly.',
     download:'Download PDF résumé', experienceTitle:'Experience', projectsTitle:'Engineering projects', articlesTitle:'Articles', resumeTitle:'Résumé',
   },
   ru: {
@@ -17,7 +17,7 @@ export const copy = {
     impact:'Результаты', impactIntro:'Измеримый эффект инженерной работы в production.',
     bring:'Что я привношу в команду', focus:'Технический фокус', featured:'Избранные инженерные кейсы', viewAll:'Все проекты', readCase:'Открыть кейс',
     nda:'Часть коммерческих продуктов не может быть продемонстрирована публично из-за NDA. Допустимые детали архитектуры, оптимизации производительности и реализации могут быть обсуждены на интервью.',
-    footer:'Senior iOS-разработчик · Россия, Самара', draft:'Черновой план', contactTitle:'Обсудим инженерные задачи', contactBody:'По вопросам Senior iOS-позиций, технического консалтинга или обсуждения производительности и архитектуры мобильных приложений напишите мне напрямую.',
+    footer:'Senior iOS-разработчик', draft:'Черновой план', contactTitle:'Обсудим инженерные задачи', contactBody:'По вопросам Senior iOS-позиций, технического консалтинга или обсуждения производительности и архитектуры мобильных приложений напишите мне напрямую.',
     download:'Скачать PDF-резюме', experienceTitle:'Опыт работы', projectsTitle:'Инженерные проекты', articlesTitle:'Статьи', resumeTitle:'Резюме',
   }
 } as const;
