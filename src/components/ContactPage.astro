@@ -1,5 +1,92 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';import {copy,type Lang} from '@/i18n/content';import {profile} from '@/config/profile';
-const {lang}=Astro.props as {lang:Lang};const t=copy[lang];
+import { Image } from 'astro:assets';
+import portrait from '@/assets/anton-bondarenko-portrait.jpeg';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { copy, type Lang } from '@/i18n/content';
+import { profile } from '@/config/profile';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = copy[lang];
 ---
-<BaseLayout lang={lang} path="/contact" title={`${t.nav.contact} — ${lang==='ru'?profile.nameRu:profile.name}`}><section class="contact-hero shell"><p class="eyebrow">Contact / {lang==='ru'?'Удаленная работа':'Remote work'}</p><h1>{t.contactTitle}</h1><p class="lede">{t.contactBody}</p><div class="contact-list"><a href={`mailto:${profile.email}`}><span>Email</span><b>{profile.email}</b><i>↗</i></a><a href={profile.telegram} target="_blank" rel="noopener noreferrer"><span>Telegram</span><b>@divlaine</b><i>↗</i></a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><b>/in/aabondarenko</b><i>↗</i></a><a href={profile.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><b>@divlaine</b><i>↗</i></a></div></section></BaseLayout>
+
+<BaseLayout lang={lang} path="/contact" title={`${t.nav.contact} — ${lang === 'ru' ? profile.nameRu : profile.name}`}>
+  <section class="contact-hero shell">
+    <div class="contact-intro">
+      <div class="contact-copy">
+        <p class="eyebrow">Contact / {lang === 'ru' ? 'Удаленная работа' : 'Remote work'}</p>
+        <h1>{t.contactTitle}</h1>
+        <p class="lede">{t.contactBody}</p>
+      </div>
+      <figure class="contact-portrait">
+        <Image
+          src={portrait}
+          alt={lang === 'ru' ? 'Антон Бондаренко' : 'Anton Bondarenko'}
+          widths={[293, 366]}
+          sizes="(max-width: 700px) calc(100vw - 32px), (max-width: 1024px) 28vw, 340px"
+          format="webp"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+
+    <div class="contact-list">
+      <a href={`mailto:${profile.email}`}><span>Email</span><b>{profile.email}</b><i>↗</i></a>
+      <a href={profile.telegram} target="_blank" rel="noopener noreferrer"><span>Telegram</span><b>@divlaine</b><i>↗</i></a>
+      <a href={profile.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><b>/in/aabondarenko</b><i>↗</i></a>
+      <a href={profile.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><b>@divlaine</b><i>↗</i></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+  }
+
+  .contact-copy {
+    min-width: 0;
+  }
+
+  .contact-copy h1 {
+    max-width: 800px;
+  }
+
+  .contact-portrait {
+    width: 100%;
+    margin: 1.5rem 0 0;
+    align-self: center;
+  }
+
+  .contact-portrait :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 366 / 500;
+    object-fit: cover;
+    object-position: 50% 42%;
+  }
+
+  @media (max-width: 900px) {
+    .contact-intro {
+      grid-template-columns: minmax(0, 1fr) minmax(190px, 28vw);
+      gap: clamp(2rem, 4vw, 3rem);
+    }
+
+  }
+
+  @media (max-width: 700px) {
+    .contact-intro {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .contact-portrait {
+      width: min(100%, 300px);
+      margin-top: 0;
+    }
+  }
+</style>
