@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageIntro from './PageIntro.astro';
+import { publications } from '@/data/publications';
+import type { Lang } from '@/i18n/content';
+
+const { lang } = Astro.props as { lang: Lang };
+const ru = lang === 'ru';
+const title = ru ? 'Исследования и публикации' : 'Research & Publications';
+const intro = ru
+  ? 'Автор и соавтор 21 научной публикации по проектированию сетей доступа, синтезу топологии, моделированию сетей и программным методам проектирования.'
+  : 'Author and co-author of 21 research publications focused on access network design, topology synthesis, network modeling, and software-assisted network design.';
+const description = ru
+  ? 'Избранные научные публикации Антона Бондаренко по проектированию сетей доступа, синтезу топологии, моделированию сетей и программным методам проектирования.'
+  : 'Selected research publications by Anton Bondarenko on access network design, topology synthesis, network modeling, and software-assisted network design.';
+---
+<BaseLayout lang={lang} path="/publications" title={`${title} — ${ru?'Антон Бондаренко':'Anton Bondarenko'}`} description={description}>
+  <PageIntro eyebrow="Research / 2012—2013" title={title} description={intro} />
+  <section class="shell article-list">
+    <div class="section-head"><div><p class="eyebrow">{ru?'21 публикация · 2012–2013':'21 publications · 2012–2013'}</p><h2>{ru?'Избранные публикации':'Selected Publications'}</h2></div></div>
+    {publications.map((publication,index) => {
+      const primaryTitle = ru ? publication.originalTitle : publication.englishTitle;
+      const secondaryTitle = ru
+        ? publication.englishTitle !== publication.originalTitle ? publication.englishTitle : undefined
+        : publication.originalTitle !== publication.englishTitle ? publication.originalTitle : undefined;
+      const primaryVenue = ru ? publication.originalVenue : publication.englishVenue ?? publication.originalVenue;
+      const secondaryVenue = ru
+        ? publication.englishVenue && publication.englishVenue !== publication.originalVenue ? publication.englishVenue : undefined
+        : publication.englishVenue && publication.originalVenue !== publication.englishVenue ? publication.originalVenue : undefined;
+      return <article>
+        <span class="index">0{index+1}</span>
+        <div>
+          <h2>{primaryTitle}</h2>
+          {secondaryTitle && <p><i>{secondaryTitle}</i></p>}
+          <p><b>{primaryVenue}</b>{secondaryVenue && <><br/><i>{secondaryVenue}</i></>}</p>
+          <p>{publication.publisher && <>{publication.publisher}. </>}{publication.bibliography}</p>
+        </div>
+      </article>;
+    })}
+  </section>
+</BaseLayout>
