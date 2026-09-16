@@ -8,6 +8,9 @@ export default defineConfig({
   integrations: [sitemap({
     filter: (page) => !page.includes('/articles/') && !page.includes('/ru/articles/'),
   })],
-  trailingSlash: 'never',
+  // GitHub Pages serves these routes from */index.html and canonicalizes them
+  // with a trailing slash. Generate the same URL shape everywhere so crawlers
+  // never have to follow a redirect from sitemap, canonical, or internal links.
+  trailingSlash: 'always',
   compressHTML: true
 });
