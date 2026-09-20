@@ -3,7 +3,7 @@ import type { Lang } from '@/i18n/content';
 export const impacts = {
   en: [
     ['6–10s → ~1s','Chat loading after a major chat-module refactoring'], ['~40s → ~4s','Time to usable UI after cold-start and data-pipeline optimization'],
-    ['99.77% → 99.97%','Crash-Free Users Rate within one quarter'], ['324K → 42K','Production crashes in one quarter'],
+    ['99.77% → 99.97%','Crash-Free Users Rate within one quarter'], ['Reduced by 8×','Production crashes in one quarter'],
     ['25% → 4%','Irrelevant Sentry events'], ['120+','iOS and Android applications delivered on the white-label platform']
   ],
   ru: [
